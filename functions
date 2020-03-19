@@ -14,21 +14,23 @@ function run_playbook() {
     exit 0
   fi
 
+  pushd "$DOKKU_LIB_ROOT/data/ansible/$APP/" >/dev/null
+
   if [[ -f "$requirements" ]]; then
     dokku_col_log_info1_quiet "$requirements file found"
     ansible-galaxy \
       install \
       -vvv --force \
-      --roles-path "$DOKKU_LIB_ROOT/data/ansible/$APP/roles" \
+      --roles-path "./roles" \
       --role-file "$requirements"
   fi
-
-  export ANSIBLE_ROLES_PATH="$DOKKU_LIB_ROOT/data/ansible/$APP/roles/"
 
   dokku_col_log_info1_quiet "$play_path file found"
   ansible-playbook \
     --inventory "$(hostname)", \
-    --module-path "$ANSIBLE_ROLES_PATH/*/library/" \
+    --module-path "./roles/*/library/" \
     --connection local \
     "$play_path"
+
+  popd >/dev/null
 }
