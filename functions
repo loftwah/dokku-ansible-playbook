@@ -7,12 +7,12 @@ REQUIREMENTS=".ansible/requirements.yml"
 function run_playbook() {
   local play_path="$1"
 
-  if ! run test -f "$play_path"; then
+  if [[ ! -f "$play_path" ]]; then
     echo "       $play_path not found or executable bit not set. Skipping ..."
     exit 0
   fi
 
-  if run test -f "$REQUIREMENTS"; then
+  if [[ -f "$REQUIREMENTS" ]]; then
     echo "       $REQUIREMENTS file found. Running it ..."
     ansible-galaxy install -fvf "$REQUIREMENTS"
   fi
