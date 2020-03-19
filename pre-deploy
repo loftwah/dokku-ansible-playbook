@@ -2,11 +2,16 @@
 
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
-APP="$1"
-PLAYBOOK="$DOKKU_LIB_ROOT/data/ansible/$APP/pre-deploy.yml"
-REQUIREMENTS="$DOKKU_LIB_ROOT/data/ansible/$APP/requirements.yml"
+dokku-ansible-playbook-pre-deploy() {
+  declare APP="$1"
+  declare PLAYBOOK="$DOKKU_LIB_ROOT/data/ansible/$APP/pre-deploy.yml"
+  declare REQUIREMENTS="$DOKKU_LIB_ROOT/data/ansible/$APP/requirements.yml"
 
-. $(dirname "$0")/functions
+  . $(dirname "$0")/functions
 
-echo "-----> Running pre-deploy ansible playbook"
-run_playbook "$PLAYBOOK" "$REQUIREMENTS"
+  dokku_col_log_info1_quiet "Running pre-deploy ansible playbook"
+
+  run_playbook "$PLAYBOOK" "$REQUIREMENTS"
+}
+
+dokku-ansible-playbook-pre-deploy "$@"

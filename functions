@@ -7,15 +7,15 @@ function run_playbook() {
   local requirements="$2"
 
   if [[ ! -f "$play_path" ]]; then
-    echo "-----> $play_path not found or executable bit not set"
+    dokku_col_log_info1_quiet "$play_path not found or executable bit not set"
     exit 0
   fi
 
   if [[ -f "$requirements" ]]; then
-    echo "-----> $requirements file found"
+    dokku_col_log_info1_quiet "$requirements file found"
     ansible-galaxy install -fr "$requirements"
   fi
 
-  echo "-----> $play_path file found"
+  dokku_col_log_info1_quiet "$play_path file found"
   ansible-playbook -i 127.0.0.1, -c local "$play_path"
 }
