@@ -20,15 +20,15 @@ function run_playbook() {
     dokku_col_log_info1_quiet "$requirements file found"
     ansible-galaxy \
       install \
-      -vvv --force \
-      --roles-path "./roles" \
+      --force \
+      --roles-path "$(pwd)/roles" \
       --role-file "$requirements"
   fi
 
   dokku_col_log_info1_quiet "$play_path file found"
   ansible-playbook \
     --inventory "$(hostname)", \
-    --module-path "./roles/*/library/" \
+    --module-path "$(pwd)/roles/*/library" \
     --connection local \
     "$play_path"
 
