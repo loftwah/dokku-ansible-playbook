@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+[[ $DOKKU_TRACE ]] && set -x
+
+export DEBIAN_FRONTEND=noninteractive
+
+if ! command -v "ansible-playbook" &>/dev/null; then
+  apt install --force-yes -qq -y ansible
+fi

@@ -1,0 +1,4 @@
+[plugin]
+description="Run ansible playbooks during deployment"
+version="0.0.1"
+[plugin.config]
