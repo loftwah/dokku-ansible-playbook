@@ -9,6 +9,6 @@ TMP_WORK_DIR="$2"
 
 pushd "$TMP_WORK_DIR" >/dev/null
 
-cp -r "$TMP_WORK_DIR/ansible/*" "$DOKKU_LIB_ROOT/data/ansible/$APP"
+cp -r "ansible/*" "$DOKKU_LIB_ROOT/data/ansible/$APP"
 
 popd >/dev/null
