@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+PLAYBBOOK=".ansible/post-deploy.yml"
+
+echo "-----> Running post-deploy ansible playbook"
+. $(dirname "$0")/functions
+run_playbook "$PLAYBOOK"

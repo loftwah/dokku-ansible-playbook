@@ -17,5 +17,6 @@ $ dokku plugin:install https://github.com/decentral1se/dokku-ansible-playbook.gi
 
 All files must be placed within the `.ansible` folder of your git repository.
 
-* `requirements.yml`: what role dependencies to download before running your plays
-* `prepare.yml`: the play to run before the application is built
+* `requirements.yml`: what role dependencies to download before running your plays.
+* `pre-deploy.yml`: the play to run before the application is deployed.
+* `post-deploy.yml`: the play to run after the application is deployed.
