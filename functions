@@ -5,8 +5,9 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 
 function run_playbook() {
-  local play_path="$1"
-  local requirements="$2"
+  local app="$1"
+  local play_path="$2"
+  local requirements="$3"
 
   if [[ ! -f "$play_path" ]]; then
     dokku_col_log_info1_quiet "$play_path not found or executable bit not set"
@@ -15,9 +16,15 @@ function run_playbook() {
 
   if [[ -f "$requirements" ]]; then
     dokku_col_log_info1_quiet "$requirements file found"
-    ansible-galaxy install -vvv --force --role-file "$requirements"
+    ansible-galaxy install \
+      -vvv --force \
+      --roles-path "$DOKKU_LIB_ROOT/data/ansible/$APP" \
+      --role-file "$requirements"
   fi
 
   dokku_col_log_info1_quiet "$play_path file found"
-  ansible-playbook --inventory "$(hostname)", --connection local "$play_path"
+  ANSIBLE_ROLES_PATH="$DOKKU_LIB_ROOT/data/ansible/$APP" ansible-playbook \
+    --inventory "$(hostname)", \
+    --connection local \
+    "$play_path"
 }

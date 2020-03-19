@@ -13,7 +13,7 @@ dokku-ansible-playbook-pre-deploy() {
 
   dokku_col_log_info1_quiet "Running pre-deploy ansible playbook"
 
-  run_playbook "$PLAYBOOK" "$REQUIREMENTS"
+  run_playbook "$APP" "$PLAYBOOK" "$REQUIREMENTS"
 }
 
 dokku-ansible-playbook-pre-deploy "$@"
