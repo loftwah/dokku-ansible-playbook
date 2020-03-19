@@ -15,9 +15,9 @@ function run_playbook() {
 
   if [[ -f "$requirements" ]]; then
     dokku_col_log_info1_quiet "$requirements file found"
-    ansible-galaxy install -fr "$requirements"
+    ansible-galaxy install -vvv --force --role-file "$requirements"
   fi
 
   dokku_col_log_info1_quiet "$play_path file found"
-  ansible-playbook -i 127.0.0.1, -c local "$play_path"
+  ansible-playbook --inventory "$(hostname)", --connection local "$play_path"
 }
