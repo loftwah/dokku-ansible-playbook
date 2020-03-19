@@ -28,6 +28,7 @@ function run_playbook() {
   dokku_col_log_info1_quiet "$play_path file found"
   ansible-playbook \
     --inventory "$(hostname)", \
+    --module-path "$ANSIBLE_ROLES_PATH/*/library/" \
     --connection local \
     "$play_path"
 }
