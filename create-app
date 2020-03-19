@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+PLAYBBOOK=".ansible/create-app.yml"
+
+echo "-----> Running create-app ansible playbook"
+. $(dirname "$0")/functions
+run_playbook "$PLAYBOOK"
