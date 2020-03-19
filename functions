@@ -13,7 +13,7 @@ function run_playbook() {
 
   if [[ -f "$requirements" ]]; then
     echo "       $requirements file found"
-    ansible-galaxy install -fvf "$requirements"
+    ansible-galaxy install -fr "$requirements"
   fi
 
   echo "       $play_path file found"
