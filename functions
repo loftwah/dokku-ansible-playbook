@@ -28,9 +28,9 @@ function run_playbook() {
   dokku_col_log_info1_quiet "$play_path file found"
   ansible-playbook \
     --inventory "$(hostname)", \
-    --module-path "$(pwd)/roles/*/library" \
     --connection local \
     "$play_path"
+    --module-path "$(pwd)/roles/*/library" \
 
   popd >/dev/null
 }
