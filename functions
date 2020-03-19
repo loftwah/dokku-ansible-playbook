@@ -14,7 +14,7 @@ function run_playbook() {
     exit 0
   fi
 
-  pushd "$DOKKU_LIB_ROOT/data/ansible/$APP" >/dev/null
+  cd "$DOKKU_LIB_ROOT/data/ansible/$APP"
 
   if [[ -f "$requirements" ]]; then
     dokku_col_log_info1_quiet "$requirements file found"
@@ -31,6 +31,4 @@ function run_playbook() {
     --connection local \
     "$play_path" \
     --module-path "$(pwd)/roles/*/library"
-
-  popd >/dev/null
 }
