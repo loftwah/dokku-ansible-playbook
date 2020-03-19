@@ -3,9 +3,10 @@
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 APP="$1"
-PLAYBOOK="$DOKKU_ROOT/$APP/ansible/post-deploy.yml"
-REQUIREMENTS="$DOKKU_ROOT/$APP/ansible/requirements.yml"
+PLAYBOOK="$DOKKU_LIB_ROOT/data/ansible/$APP/post-deploy.yml"
+REQUIREMENTS="$DOKKU_LIB_ROOT/data/ansible/$APP/requirements.yml"
+
+. $(dirname "$0")/functions
 
 echo "-----> Running post-deploy ansible playbook"
-. $(dirname "$0")/functions
 run_playbook "$PLAYBOOK" "$REQUIREMENTS"

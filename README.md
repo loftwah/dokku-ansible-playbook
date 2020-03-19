@@ -5,30 +5,30 @@ Run ansible playbooks during deployment.
 ## Requirements
 
 * dokku 0.19.13+
-* [dokku-supply-config](https://github.com/dokku-community/dokku-supply-config)
 * Debian based system (uses `apt` package manager for dependencies)
 
 ## Installation
 
 ```shell
-$ dokku plugin:install https://github.com/josegonzalez/dokku-supply-config.git
 $ dokku plugin:install https://github.com/decentral1se/dokku-ansible-playbook.git
 ```
 
 ## Usage
 
-All files must be placed within the `.dokku/ansible` folder of your git repository.
+All files must be placed within the `ansible` folder of your git repository.
 
 * `requirements.yml`: what role dependencies to download before running your plays.
 
-The following hooks are supported (add `.yml` to the hook name in `.dokku/ansible`):
+The following hooks are supported (add `.yml` to the hook name in `ansible`):
 
 * `pre-deploy`
 * `post-deploy`
 
+Everything is copied into `$DOKKU_LIB_ROOT/data/ansible/$APP` on the `post-extract` hook.
+
 ## Example
 
-### .dokku/ansible/requirements.yml
+### ansible/requirements.yml
 
 ```yaml
 ---
@@ -36,7 +36,7 @@ The following hooks are supported (add `.yml` to the hook name in `.dokku/ansibl
   version: v2020.3.15
 ```
 
-### .dokku/ansible/pre-deploy.yml
+### ansible/pre-deploy.yml
 
 ```yaml
 ---
