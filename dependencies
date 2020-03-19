@@ -6,5 +6,5 @@ export DEBIAN_FRONTEND=noninteractive
 
 if ! command -v "ansible" &>/dev/null; then
   echo "-----> installing ansible"
-  apt install --force-yes -qq -y ansible
+  apt install --allow -qq -y ansible
 fi
