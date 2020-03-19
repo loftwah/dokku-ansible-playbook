@@ -10,11 +10,8 @@ dokku-ansible-playbook-post-extract() {
   dokku_col_log_info1_quiet "Checking for ansible playbooks supplied in repo"
 
   if [[ -d "$TMPDIR/ansible" ]] && [[ "$(ls -A "$TMPDIR/ansible")" ]]; then
-    mkout=$(mkdir -p "$DOKKU_LIB_ROOT/data/ansible/$APP")
-    dokku_log_verbose_quiet "$mkout"
-
-    cpout=$(cp -r "$TMPDIR/ansible/." "$DOKKU_LIB_ROOT/data/ansible/$APP")
-    dokku_log_verbose_quiet "$cpout"
+    mkdir -p "$DOKKU_LIB_ROOT/data/ansible/$APP"
+    cp -r "$TMPDIR/ansible/." "$DOKKU_LIB_ROOT/data/ansible/$APP"
   fi
 }
 
