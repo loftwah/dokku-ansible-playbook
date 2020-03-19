@@ -2,6 +2,8 @@
 
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+
 dokku-ansible-playbook-post-deploy() {
   declare APP="$1"
   declare PLAYBOOK="$DOKKU_LIB_ROOT/data/ansible/$APP/post-deploy.yml"

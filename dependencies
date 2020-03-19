@@ -2,9 +2,15 @@
 
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
-export DEBIAN_FRONTEND=noninteractive
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 
-if ! command -v "ansible" &>/dev/null; then
-  dokku_col_log_info1_quiet "installing ansible"
-  apt install -qq -y ansible
-fi
+dokku-ansible-playbook-dependencies() {
+  export DEBIAN_FRONTEND=noninteractive
+
+  if ! command -v "ansible" &>/dev/null; then
+    dokku_col_log_info1_quiet "installing ansible"
+    apt install -qq -y ansible
+  fi
+}
+
+dokku-ansible-playbook-dependencies "$@"
