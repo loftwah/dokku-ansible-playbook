@@ -17,8 +17,7 @@ function run_playbook() {
 
   validate_dependencies
 
-  export ANSIBLE_ROLES_PATH="$DOKKU_LIB_ROOT/data/ansible/$APP/roles"
-  export ANSIBLE_LIBRARY="$DOKKU_LIB_ROOT/data/ansible/$APP/roles/*/library"
+  pushd "$DOKKU_LIB_ROOT/data/ansible/$APP" >/dev/null
 
   if [[ ! -f "$play_path" ]]; then
     dokku_col_log_info1_quiet "$play_path not found or executable bit not set"
@@ -27,19 +26,17 @@ function run_playbook() {
 
   if [[ -f "$requirements" ]]; then
     dokku_col_log_info1_quiet "$requirements file found"
-    dokku_col_log_info1_quiet "Using $ANSIBLE_ROLES_PATH as role path"
     ansible-galaxy \
       install \
       --force \
-      --roles-path "$ANSIBLE_ROLES_PATH" \
       --role-file "$requirements"
   fi
 
   dokku_col_log_info1_quiet "$play_path file found"
-  dokku_col_log_info1_quiet "Using $ANSIBLE_LIBRARY as module path"
   ansible-playbook \
     --inventory "$(hostname)", \
     --connection local \
-    --module-path "$ANSIBLE_LIBRARY" \
     "$play_path"
+
+  popd >/dev/null
 }
