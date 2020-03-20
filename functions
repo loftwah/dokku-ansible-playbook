@@ -20,14 +20,16 @@ function run_playbook() {
 
   if [[ -f "$requirements" ]]; then
     dokku_col_log_info1_quiet "$requirements file found"
+    dokku_col_log_info1_quiet "Using $ANSIBLE_ROLES_PATH as role path"
     ansible-galaxy \
       install \
       --force \
-      --roles-path "$DOKKU_LIB_ROOT/data/ansible/$APP/roles" \
+      --roles-path "$ANSIBLE_ROLES_PATH" \
       --role-file "$requirements"
   fi
 
   dokku_col_log_info1_quiet "$play_path file found"
+  dokku_col_log_info1_quiet "Using $ANSIBLE_LIBRARY as module path"
   ansible-playbook \
     --inventory "$(hostname)", \
     --connection local \
