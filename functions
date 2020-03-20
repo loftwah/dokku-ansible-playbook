@@ -28,6 +28,9 @@ function run_playbook() {
   fi
 
   dokku_col_log_info1_quiet "Copying library modules into place"
+  mkdir -p "$DOKKU_ROOT/.ansible/"
+  mkdir -p "$DOKKU_ROOT/.ansible/roles"
+  mkdir -p "$DOKKU_ROOT/.ansible/plugins"
   mkdir -p "$DOKKU_ROOT/.ansible/plugins/modules"
   cp -R "$DOKKU_ROOT/.ansible/*/library/*" "$DOKKU_ROOT/.ansible/plugins/modules"
 
