@@ -28,7 +28,6 @@ Notes:
 
 * Everything is copied into `$DOKKU_LIB_ROOT/data/ansible/$APP` on the `post-extract` hook.
 * Dokku will make sure that your Ansible plays are run on the right hook against the Dokku server localhost.
-* The `ansible-galaxy` install command is run with `--force` to ensure a clean slate on each hook execution.
 
 ## Example
 
