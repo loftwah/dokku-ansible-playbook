@@ -28,11 +28,8 @@ function run_playbook() {
   fi
 
   dokku_col_log_info1_quiet "Copying library modules into place"
-  mkdir -p "$DOKKU_ROOT/.ansible/"
-  mkdir -p "$DOKKU_ROOT/.ansible/roles"
-  mkdir -p "$DOKKU_ROOT/.ansible/plugins"
-  mkdir -p "$DOKKU_ROOT/.ansible/plugins/modules"
-  cp -R "$DOKKU_ROOT/.ansible/roles/*/library/*" "$DOKKU_ROOT/.ansible/plugins/modules"
+  mkdir -p $DOKKU_ROOT/.ansible/{roles,plugins/{modules}}
+  cp -R $DOKKU_ROOT/.ansible/roles/*/library/* $DOKKU_ROOT/.ansible/plugins/modules
 
   dokku_col_log_info1_quiet "$play_path file found"
   ansible-playbook --inventory "$(hostname)", --connection local "$play_path"
