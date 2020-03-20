@@ -4,11 +4,18 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 
+function validate_dependencies() {
+  if ! command -v "ansible-playbook" &>/dev/null; then
+    log-fail "Missing ansible-playbook, run dokku plugin:install-dependencies"
+  fi
+}
 
 function run_playbook() {
   local app="$1"
   local play_path="$2"
   local requirements="$3"
+
+  validate_dependencies
 
   export ANSIBLE_ROLES_PATH="$DOKKU_LIB_ROOT/data/ansible/$APP/roles"
   export ANSIBLE_LIBRARY="$DOKKU_LIB_ROOT/data/ansible/$APP/roles/*/library"
