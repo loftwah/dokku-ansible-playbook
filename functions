@@ -17,8 +17,6 @@ function run_playbook() {
 
   validate_dependencies
 
-  pushd "$DOKKU_LIB_ROOT/data/ansible/$APP" >/dev/null
-
   if [[ ! -f "$play_path" ]]; then
     dokku_col_log_info1_quiet "$play_path not found or executable bit not set"
     exit 0
@@ -29,8 +27,10 @@ function run_playbook() {
     ansible-galaxy install --force --role-file "$requirements"
   fi
 
+  dokku_col_log_info1_quiet "Copying library modules into place"
+  mkdir -p "$DOKKU_ROOT/.ansible/plugins/modules"
+  cp -R "$DOKKU_ROOT/.ansible/*/library/*" "$DOKKU_ROOT/.ansible/plugins/modules"
+
   dokku_col_log_info1_quiet "$play_path file found"
   ansible-playbook --inventory "$(hostname)", --connection local "$play_path"
-
-  popd >/dev/null
 }
