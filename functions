@@ -4,19 +4,19 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 
-validate_dependencies() {
+dokku-ansible-playbook-validate-dependencies() {
   if ! command -v "ansible-playbook" &>/dev/null; then
     log-fail "Missing ansible-playbook, run dokku plugin:install-dependencies"
   fi
 }
 
-function run_playbook() {
+dokku-ansible-playbook-run() {
   local app="$1"
   local play_path="$2"
   local requirements="$3"
   local vault_file="$DOKKU_LIB/ansible/$app/.vault.sh"
 
-  validate_dependencies
+  dokku-ansible-playbook-validate-dependencies
 
   if [[ ! -f "$play_path" ]]; then
     dokku_col_log_info1_quiet "$play_path not found or executable bit not set"
@@ -42,4 +42,24 @@ function run_playbook() {
   dokku_col_log_info1_quiet "$play_path file found"
   dokku_col_log_info1_quiet "running ansible-playbook with $args"
   ansible-playbook "$args" "$play_path"
+}
+
+dokku-ansible-playbook-vault-pass-cmd() {
+  #shellcheck disable=SC2034
+  declare desc="insert new vault password for encrypt/decrypt of passwords"
+
+  if [[ -f "$DOKKU_LIB/data/ansible/.vault-pass" ]]; then
+    dokku_col_log_info1_quiet "Vault password already in place"
+    exit 0
+  fi
+
+  read -srp "Vault password", vault_password
+
+  if [[ -d "$DOKKU_LIB/data/ansible" ]]; then
+    dokku_col_log_info1_quiet "Creating $DOKKU_LIB/data/ansible"
+    mkdir -p "$DOKKU_LIB/data/ansible"
+  fi
+
+  dokku_col_log_info1_quiet "Generating $DOKKU_LIB/data/ansible/.vault-pass"
+  echo "$vault_password" > "$DOKKU_LIB/data/ansible/.vault-pass"
 }

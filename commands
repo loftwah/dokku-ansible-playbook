@@ -31,6 +31,10 @@ help_desc
     fi
     ;;
 
+  vault-pass)
+    dokku-ansible-playbook-vault-pass-cmd "$@"
+    ;;
+
   *)
     exit "$DOKKU_NOT_IMPLEMENTED_EXIT"
     ;;
