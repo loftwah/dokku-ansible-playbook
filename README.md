@@ -23,6 +23,7 @@ All files must be placed within the `ansible` folder of your git repository. Eve
 - `requirements.yml`: what role dependencies to download before running your plays.
 - `pre-deploy.yml`: play run before a deployment
 - `post-deploy.yml`: play run after a deployment
+- `vars.yml`: variables (you'll need to include manually with the [include_vars](https://docs.ansible.com/ansible/latest/modules/include_vars_module.html) module)
 
 ## Passwords
 
