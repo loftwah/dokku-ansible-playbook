@@ -18,18 +18,19 @@ $ dokku plugin:install-dependencies
 
 ## Usage
 
-All files must be placed within the `ansible` folder of your git repository.
+All files must be placed within the `ansible` folder of your git repository. Everything is copied into `$DOKKU_LIB_ROOT/data/ansible/$APP` on the `post-extract` hook. Dokku will make sure that your Ansible plays are run on the right hook against the Dokku server localhost.
 
 - `requirements.yml`: what role dependencies to download before running your plays.
 - `pre-deploy.yml`: play run before a deployment
 - `post-deploy.yml`: play run after a deployment
 
-- Everything is copied into `$DOKKU_LIB_ROOT/data/ansible/$APP` on the `post-extract` hook.
-- Dokku will make sure that your Ansible plays are run on the right hook against the Dokku server localhost.
-
 ## Passwords
 
-You can place a `ansible/.vault.sh` script (don't forget to `chmod +x` it) that looks like this:
+You can place a `ansible/.vault.sh` script that produces your [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html password. This file will be copied over to `$DOKKU_LIB_ROOT/data/ansible/$APP` and locked down with the correct read-only permissions for the Dokku user account. This will then be used as the [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) password file which can be used to decrypt secrets.
+
+Don't forget to `chmod +x` it and also **add this file to your `.gitignore`**, you've been warned!
+
+Here's an example `ansible/.vault.sh` file.
 
 ```bash
 #!/bin/bash
@@ -38,8 +39,6 @@ set -eu -o pipefail
 
 echo "my-cool-vault-password"
 ```
-
-This file will be copied over to `$DOKKU_LIB_ROOT/data/ansible/$APP` and locked down with the correct read-only permissions for the Dokku user account. This will then be used as the [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) password file which can be used to decrypt secrets.
 
 So, if you then encrypt a secret:
 
@@ -51,7 +50,7 @@ $ ansible-vault \
   mysecretvalue
 ```
 
-You can place this in your plays and it can be successfully decrypted on the host.
+You can place this output in your plays and it can be successfully decrypted on the remote Dokku host.
 
 ## Example
 
