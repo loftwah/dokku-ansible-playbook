@@ -3,14 +3,7 @@
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 ansible_default_cmd() {
-    echo -e 'Usage: dokku ansible[:COMMAND]'
-    echo ''
-    echo 'Run ansible playbooks during deployment'
-    echo ''
-    echo 'Commands:'
-    cat<<help_content
-  ansible:vault-pass, Insert new vault password for encrypt/decrypt of passwords
-help_content
+  dokku_log_fail "Please use one of the specified commands, run dokku ansible:help"
 }
 
 ansible_default_cmd "$@"
