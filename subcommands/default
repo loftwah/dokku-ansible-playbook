@@ -5,7 +5,9 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 
 cmd-ansible-default() {
-  dokku_log_fail "Please use one of the specified commands, run dokku ansible:help"
+  declare desc="Run ansible playbooks during deployment"
+  local cmd="ansible"
+  dokku_log_fail "Missing command, please run 'dokku ansible:help'"
 }
 
 cmd-ansible-default "$@"

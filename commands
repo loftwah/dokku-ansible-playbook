@@ -16,7 +16,7 @@ help_content
     }
 
     if [[ $1 = "ansible:help" ]]; then
-      echo -e 'Usage: dokku ansible[:COMMAND]'
+      echo -e 'Usage: dokku ansible:COMMAND'
       echo ''
       echo 'Run ansible playbooks during deployment'
       echo ''
