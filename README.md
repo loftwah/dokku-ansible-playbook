@@ -52,6 +52,10 @@ $ ansible-vault \
 
 You can place this output in your plays and it can be successfully decrypted on the remote Dokku host.
 
+## Permissions
+
+Since the `dokku` user account runs the plays on the host, you will need to deal with sudo permissions when you want to use `become: true` to run a privilege escalation to the root account. In order to do this, you'll need to 1) run `passwd dokku` as the root user and set an account password and 2) add the `dokku` user account to the sudoers group (`usermod -aG sudo dokku`).
+
 ## Example
 
 ### ansible/requirements.yml
