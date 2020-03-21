@@ -4,11 +4,11 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 
-ansible_add_vault_password_cmd() {
+ansible_vault_pass_cmd() {
   #shellcheck disable=SC2034
   declare desc="insert new vault password for encrypt/decrypt of passwords"
 
-  if [[ -f "$DOKKU_LIB/data/ansible/.vault-password" ]]; then
+  if [[ -f "$DOKKU_LIB/data/ansible/.vault-pass" ]]; then
     dokku_col_log_info1_quiet "Vault password already in place"
     exit 0
   fi
@@ -20,9 +20,9 @@ ansible_add_vault_password_cmd() {
     mkdir -p "$DOKKU_LIB/data/ansible"
   fi
 
-  dokku_col_log_info1_quiet "Generating $DOKKU_LIB/data/ansible/.vault-password"
-  echo "$vault_password" > "$DOKKU_LIB/data/ansible/.vault-password"
+  dokku_col_log_info1_quiet "Generating $DOKKU_LIB/data/ansible/.vault-pass"
+  echo "$vault_password" > "$DOKKU_LIB/data/ansible/.vault-pass"
 
 }
 
-ansible_add_vault_password_cmd "$@"
+ansible_vault_pass_cmd "$@"

@@ -11,7 +11,7 @@ case "$1" in
       #shellcheck disable=SC2034
       declare desc="return ansible-playbook plugin help content"
       cat<<help_content
-    ansible:add-vault-password, Insert new vault password for encrypt/decrypt of passwords
+    ansible:vault-pass, Insert new vault password for encrypt/decrypt of passwords
 help_content
     }
 
