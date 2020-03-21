@@ -8,7 +8,6 @@ dokku-ansible-playbook-post-extract() {
   declare APP="$1" TMPDIR="$2"
 
   dokku_col_log_info1_quiet "Checking for ansible playbooks supplied in repo"
-
   if [[ -d "$TMPDIR/ansible" ]] && [[ "$(ls -A "$TMPDIR/ansible")" ]]; then
     mkdir -p "$DOKKU_LIB_ROOT/data/ansible/$APP"
     cp -r "$TMPDIR/ansible/." "$DOKKU_LIB_ROOT/data/ansible/$APP"

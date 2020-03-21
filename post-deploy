@@ -12,7 +12,6 @@ dokku-ansible-playbook-post-deploy() {
   . $(dirname "$0")/functions
 
   dokku_col_log_info1_quiet "Running post-deploy ansible playbook"
-
   run_playbook "$APP" "$PLAYBOOK" "$REQUIREMENTS"
 }
 
