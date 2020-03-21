@@ -32,11 +32,11 @@ function run_playbook() {
   mkdir -p $DOKKU_ROOT/.ansible/{roles,plugins/modules}
   cp -R $DOKKU_ROOT/.ansible/roles/*/library/* $DOKKU_ROOT/.ansible/plugins/modules
 
-  local args="--inventory "$(hostname)", --connection local"
+  local args="--inventory $(hostname), --connection local"
 
   if [[ -f "$vault_file" ]]; then
     dokku_col_log_info1_quiet "$vault_file file found"
-    args+="--vault-password-file \"$vault_file\""
+    args+=" --vault-password-file \"$vault_file\""
   fi
 
   dokku_col_log_info1_quiet "$play_path file found"
