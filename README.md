@@ -32,7 +32,7 @@ Ansible uses the [vault](https://docs.ansible.com/ansible/latest/user_guide/vaul
 To get started with enabling this, you should generate a vault password for your self and run the following on your Dokku host.
 
 ```bash
-$ dokku ansible-playbook:add-vault-password
+$ dokku ansible-playbook:vault-pass
 ```
 
 Then you can start to encrypt your passwords on your local machine with the following.

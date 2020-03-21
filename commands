@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
 
-[[ " help ansible:help " == *" $1 "* ]] || exit "$DOKKU_NOT_IMPLEMENTED_EXIT"
+[[ " help ansible-playbook:help " == *" $1 "* ]] || exit "$DOKKU_NOT_IMPLEMENTED_EXIT"
 
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 case "$1" in
 
-  help | ansible:help)
+  help | ansible-playbook:help)
     help_content_func() {
       #shellcheck disable=SC2034
       declare desc="return ansible-playbook plugin help content"
       cat<<help_content
-    ansible:vault-pass, Insert new vault password for encrypt/decrypt of passwords
+    ansible-playbook:vault-pass, Insert new vault password for encrypt/decrypt of passwords
 help_content
     }
 
-    if [[ $1 = "ansible:help" ]]; then
-      echo -e 'Usage: dokku ansible:COMMAND'
+    if [[ $1 = "ansible-playbook:help" ]]; then
+      echo -e 'Usage: dokku ansible-playbook:COMMAND'
       echo ''
       echo 'Run ansible playbooks during deployment'
       echo ''
@@ -26,7 +26,7 @@ help_content
       help_content_func
     else
       cat<<help_desc
-    ansible, Run ansible playbooks during deployment
+    ansible-playbook, Run ansible playbooks during deployment
 help_desc
     fi
     ;;
