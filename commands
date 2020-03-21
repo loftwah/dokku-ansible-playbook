@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+[[ " help ansible-playbook:help " == *" $1 "* ]] || exit "$DOKKU_NOT_IMPLEMENTED_EXIT"
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+case "$1" in
+
+  help | ansible-playbook:help | ansible-playbook)
+    help_content_func() {
+      declare desc="return ansible-playbook plugin help content"
+      cat<<help_content
+    ansible-playbook:add-vault-password, Insert new vault password for encrypt/decrypt of passwords
+help_content
+    }
+
+    if [[ $1 = "ansible-playbook:help" ]]; then
+      echo -e 'Usage: dokku ansible-playbook[:COMMAND]'
+      echo ''
+      echo 'Run ansible playbooks during deployment'
+      echo ''
+    elif [[ $(ps -o command= $PPID) == *"--all"* ]]; then
+      help_content_func
+    else
+      cat<<help_desc
+    ansible-playbook, Run ansible playbooks during deployment
+help_desc
+    fi
+    ;;
+
+  *)
+    exit "$DOKKU_NOT_IMPLEMENTED_EXIT"
+    ;;
+
+esac
