@@ -4,7 +4,7 @@ set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 
-function validate_dependencies() {
+validate_dependencies() {
   if ! command -v "ansible-playbook" &>/dev/null; then
     log-fail "Missing ansible-playbook, run dokku plugin:install-dependencies"
   fi
