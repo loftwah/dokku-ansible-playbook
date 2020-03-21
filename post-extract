@@ -10,7 +10,12 @@ dokku-ansible-playbook-post-extract() {
   dokku_col_log_info1_quiet "Checking for ansible playbooks supplied in repo"
   if [[ -d "$TMPDIR/ansible" ]] && [[ "$(ls -A "$TMPDIR/ansible")" ]]; then
     mkdir -p "$DOKKU_LIB_ROOT/data/ansible/$APP"
-    cp -r "$TMPDIR/ansible/." "$DOKKU_LIB_ROOT/data/ansible/$APP"
+    cp -r "$TMPDIR/ansible/*.yml" "$DOKKU_LIB_ROOT/data/ansible/$APP"
+    if [[ -f "$TMPDIR/ansible/.vault.sh" ]]; then
+      dokku_col_log_info1_quiet "Moving vault password file into place"
+      cp -r "$TMPDIR/ansible/.vault.sh" "$DOKKU_LIB_ROOT/data/ansible/$APP"
+      chmod 600 "$DOKKU_LIB_ROOT/data/ansible/$APP/.vault.sh"
+    fi
   fi
 }
 
