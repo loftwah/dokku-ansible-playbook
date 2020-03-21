@@ -7,6 +7,7 @@ source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 ansible_vault_pass_cmd() {
   #shellcheck disable=SC2034
   declare desc="insert new vault password for encrypt/decrypt of passwords"
+  local cmd="ansible:vault-pass"
 
   if [[ -f "$DOKKU_LIB/data/ansible/.vault-pass" ]]; then
     dokku_col_log_info1_quiet "Vault password already in place"
