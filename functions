@@ -36,9 +36,10 @@ function run_playbook() {
 
   if [[ -f "$vault_file" ]]; then
     dokku_col_log_info1_quiet "$vault_file file found"
-    args+=" --vault-password-file \"$vault_file\""
+    args+=" --vault-password-file $vault_file"
   fi
 
   dokku_col_log_info1_quiet "$play_path file found"
+  dokku_col_log_info1_quiet "running ansible-playbook with $args"
   ansible-playbook "$args" "$play_path"
 }
