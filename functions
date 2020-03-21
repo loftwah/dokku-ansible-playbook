@@ -53,7 +53,7 @@ dokku-ansible-playbook-vault-pass-cmd() {
     exit 0
   fi
 
-  read -srp "Vault password", vault_password
+  read -srp "Vault password: " vault_password
 
   if [[ -d "$DOKKU_LIB/data/ansible" ]]; then
     dokku_col_log_info1_quiet "Creating $DOKKU_LIB/data/ansible"
