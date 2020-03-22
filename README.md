@@ -2,7 +2,7 @@
 
 Run ansible playbooks during deployment.
 
-This plugin can be useful when you need to provision your server before or after a deployment of your application (or on [any hook](https://github.com/dokku/dokku/blob/master/docs/development/plugin-triggers.md), just raise an issue and let's add it) and you prefer to use Ansible instead of Bash. For example, you make use of the [ansible-dokku](https://github.com/dokku/ansible-dokku/) roles.
+This plugin can be useful when you need to provision your server before or after a deployment of your application (or on [any hook](https://github.com/dokku/dokku/blob/master/docs/development/plugin-triggers.md), just raise an issue and let's add it) and you prefer to use Ansible instead of Bash for certain tasks. Bash can still be the right tool for other things but sometimes, it can be become tricky to manage the idempotent case in Bash. For example, you make use of the [ansible-dokku](https://github.com/dokku/ansible-dokku/) roles.
 
 ## Requirements
 
