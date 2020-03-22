@@ -25,7 +25,8 @@ All files must be placed within the `ansible` folder of your git repository. Eve
 - `requirements.yml`: what role dependencies to download before running your plays.
 - `pre-deploy.yml`: play run before a deployment
 - `post-deploy.yml`: play run after a deployment
-- `vars.yml`: variables (you'll need to include manually with the [include_vars](https://docs.ansible.com/ansible/latest/modules/include_vars_module.html) module)
+- `post-delete.yml`: play run after an application delete
+- `vars/...`: variable files (you'll need to include manually with the [include_vars](https://docs.ansible.com/ansible/latest/modules/include_vars_module.html) module)
 
 ## Passwords
 
@@ -57,7 +58,7 @@ set -eu -o pipefail
 echo "my-cool-vault-password"
 ```
 
-Then for example, if you want to pass a sudo password, you might include a `vars.yml`.
+Then for example, if you want to pass a sudo password, you might include a `vars/ansible_become_password.yml`.
 
 ```yaml
 ---
@@ -67,6 +68,12 @@ ansible_become_password: !vault ...
 ## Permissions
 
 Since the `dokku` user account runs the plays on the host, you will need to deal with sudo permissions when you want to use `become: true` to run a privilege escalation to the root account. You can give your `dokku` user account passwordless sudo access but that would give a lot of power to people who can get access to that user account. A solution to this can be to add your `dokku` to the sudoers group, give the account a password (`passwd dokku && usermod -aG sudo dokku`) and pass `ansible_become_password` in as a variable.
+
+## Injected variables
+
+Same as the plugin available variables but in your Ansible plays.
+
+- `dokku_lib_root`
 
 ## Example
 
@@ -84,10 +91,23 @@ Since the `dokku` user account runs the plays on the host, you will need to deal
 ---
 - hosts: all
   tasks:
+    - name: Load variables
+      include_vars:
+        dir: "{{ dokku_lib_root }}/data/ansible/gitea/vars/"
+        extensions:
+          - yml
+
     - name: Configure the foobar environment
       dokku_config:
         app: foobar
         restart: false
         config:
-          FOO: BAR
+          FOO: "BAR"
+
+    - name: Setup host group
+      group:
+        name: barfoo
+        system: true
+        state: present
+      become: true
 ```
