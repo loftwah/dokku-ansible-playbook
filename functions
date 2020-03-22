@@ -43,8 +43,7 @@ dokku-ansible-playbook-run() {
   dokku_col_log_info1_quiet "running ansible-playbook with $args"
   ansible-playbook \
     --extra-vars "dokku_lib_root=$DOKKU_LIB_ROOT" \
-    "$args" \
-    "$play_path"
+    $args $play_path
 }
 
 dokku-ansible-playbook-vault-pass-cmd() {
