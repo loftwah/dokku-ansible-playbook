@@ -14,7 +14,7 @@ dokku-ansible-playbook-run() {
   local app="$1"
   local play_path="$2"
   local requirements="$3"
-  local vault_file="$DOKKU_LIB_ROOT/ansible/.vault-pass.sh"
+  local vault_file="$DOKKU_LIB_ROOT/data/ansible/.vault-pass.sh"
 
   dokku-ansible-playbook-validate-dependencies
 
@@ -47,7 +47,7 @@ dokku-ansible-playbook-run() {
 dokku-ansible-playbook-vault-pass-cmd() {
   #shellcheck disable=SC2034
   declare desc="insert new vault password for encrypt/decrypt of passwords"
-  local vault_file="$DOKKU_LIB_ROOT/ansible/.vault-pass.sh"
+  local vault_file="$DOKKU_LIB_ROOT/data/ansible/.vault-pass.sh"
 
   if [[ -f $vault_file ]]; then
     dokku_col_log_info1_quiet "Vault password already in place"
