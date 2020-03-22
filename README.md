@@ -88,6 +88,4 @@ Since the `dokku` user account runs the plays on the host, you will need to deal
         restart: false
         config:
           FOO: BAR
-      become: true
-      become_user: dokku
 ```
