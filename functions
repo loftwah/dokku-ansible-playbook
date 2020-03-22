@@ -14,7 +14,7 @@ dokku-ansible-playbook-run() {
   local app="$1"
   local play_path="$2"
   local requirements="$3"
-  local vault_file="$DOKKU_LIB/ansible/$app/.vault.sh"
+  local vault_file="$DOKKU_LIB/ansible/.vault-pass.sh"
 
   dokku-ansible-playbook-validate-dependencies
 
@@ -36,7 +36,7 @@ dokku-ansible-playbook-run() {
 
   if [[ -f "$vault_file" ]]; then
     dokku_col_log_info1_quiet "$vault_file file found"
-    args+=" --vault-password-file $vault_file"
+    args="${args} --vault-password-file $vault_file"
   fi
 
   dokku_col_log_info1_quiet "$play_path file found"
@@ -48,18 +48,25 @@ dokku-ansible-playbook-vault-pass-cmd() {
   #shellcheck disable=SC2034
   declare desc="insert new vault password for encrypt/decrypt of passwords"
 
-  if [[ -f "$DOKKU_LIB/data/ansible/.vault-pass" ]]; then
+  if [[ -f $vault_file ]]; then
     dokku_col_log_info1_quiet "Vault password already in place"
     exit 0
   fi
 
   read -srp "Vault password: " vault_password
 
-  if [[ -d "$DOKKU_LIB/data/ansible" ]]; then
+  if [[ ! -d "$DOKKU_LIB/data/ansible" ]]; then
     dokku_col_log_info1_quiet "Creating $DOKKU_LIB/data/ansible"
     mkdir -p "$DOKKU_LIB/data/ansible"
   fi
 
-  dokku_col_log_info1_quiet "Generating $DOKKU_LIB/data/ansible/.vault-pass"
-  echo "$vault_password" > "$DOKKU_LIB/data/ansible/.vault-pass"
+  dokku_col_log_info1_quiet "Generating $vault_file"
+
+  { echo "#!/bin/bash";
+    echo "";
+    echo "set -eu -o pipefail";
+    echo "";
+    echo "echo \"$vault_password\""; } > "$vault_file"
+
+  chmod 600 "$vault_file"
 }
