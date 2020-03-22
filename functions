@@ -14,7 +14,7 @@ dokku-ansible-playbook-run() {
   local app="$1"
   local play_path="$2"
   local requirements="$3"
-  local vault_file="$DOKKU_LIB/ansible/.vault-pass.sh"
+  local vault_file="$DOKKU_LIB_ROOT/ansible/.vault-pass.sh"
 
   dokku-ansible-playbook-validate-dependencies
 
@@ -55,9 +55,9 @@ dokku-ansible-playbook-vault-pass-cmd() {
 
   read -srp "Vault password: " vault_password
 
-  if [[ ! -d "$DOKKU_LIB/data/ansible" ]]; then
-    dokku_col_log_info1_quiet "Creating $DOKKU_LIB/data/ansible"
-    mkdir -p "$DOKKU_LIB/data/ansible"
+  if [[ ! -d "$DOKKU_LIB_ROOT/data/ansible" ]]; then
+    dokku_col_log_info1_quiet "Creating $DOKKU_LIB_ROOT/data/ansible"
+    mkdir -p "$DOKKU_LIB_ROOT/data/ansible"
   fi
 
   dokku_col_log_info1_quiet "Generating $vault_file"
