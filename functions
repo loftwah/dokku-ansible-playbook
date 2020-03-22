@@ -69,5 +69,5 @@ dokku-ansible-playbook-vault-pass-cmd() {
     echo "";
     echo "echo \"$vault_password\""; } > "$vault_file"
 
-  chmod 600 "$vault_file"
+  chmod +x "$vault_file"
 }
