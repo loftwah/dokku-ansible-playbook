@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+
+dokku-ansible-playbook-post-delete() {
+  declare APP="$1"
+  declare PLAYBOOK="$DOKKU_LIB_ROOT/data/ansible/$APP/post-delete.yml"
+  declare REQUIREMENTS="$DOKKU_LIB_ROOT/data/ansible/$APP/requirements.yml"
+
+  . $(dirname "$0")/functions
+
+  dokku_col_log_info1_quiet "Running post-delete ansible playbook"
+  dokku-ansible-playbook-run "$APP" "$PLAYBOOK" "$REQUIREMENTS"
+}
+
+dokku-ansible-playbook-post-delete "$@"
