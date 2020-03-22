@@ -85,6 +85,16 @@ Same as the plugin available variables but in your Ansible plays.
   version: v2020.3.15
 ```
 
+### ansible/vars/ansible_become_password.yml
+
+```yaml
+---
+ansible_become_pass: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  34396236353735666531323238656533643465303131663464613162396333313836363630666266
+  6539323631656635333864316166633064633366323936610a656137616334313534333635313232
+```
+
 ### ansible/pre-deploy.yml
 
 ```yaml
