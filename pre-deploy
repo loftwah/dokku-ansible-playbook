@@ -12,7 +12,7 @@ dokku-ansible-playbook-pre-deploy() {
   . $(dirname "$0")/functions
 
   dokku_col_log_info1_quiet "Running pre-deploy ansible playbook"
-  run_playbook "$APP" "$PLAYBOOK" "$REQUIREMENTS"
+  dokku-ansible-playbook-run "$APP" "$PLAYBOOK" "$REQUIREMENTS"
 }
 
 dokku-ansible-playbook-pre-deploy "$@"
