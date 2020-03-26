@@ -6,7 +6,8 @@ source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 
 dokku-ansible-playbook-validate-dependencies() {
   if ! command -v "ansible-playbook" &>/dev/null; then
-    log-fail "Missing ansible-playbook, run dokku plugin:install-dependencies"
+    dokku_col_log_info1_quiet "Missing ansible-playbook, run dokku plugin:install-dependencies"
+    exit 0
   fi
 }
 
