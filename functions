@@ -26,7 +26,7 @@ dokku-ansible-playbook-run() {
 
   if [[ -f "$requirements" ]]; then
     dokku_col_log_info1_quiet "$requirements file found"
-    ansible-galaxy install --role-file "$requirements"
+    ansible-galaxy install --role-file "$requirements" --force
   fi
 
   dokku_col_log_info1_quiet "Copying library modules into place"
