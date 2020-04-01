@@ -42,7 +42,7 @@ dokku-ansible-playbook-run() {
 
   dokku_col_log_info1_quiet "$play_path file found"
   ansible-playbook \
-    -vv \
+    -v \
     --extra-vars "dokku_lib_root=$DOKKU_LIB_ROOT" \
     $args $play_path
 }
